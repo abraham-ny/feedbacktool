@@ -1,0 +1,41 @@
+﻿<Window x:Class="FeedbackTooll.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FeedbackTooll"
+        mc:Ignorable="d"
+        Title="Sunny" Height="353" Width="293" ResizeMode="NoResize">
+    <Grid>
+        <TabControl>
+            <TabItem Header="Feedback" IsEnabled="False">
+                <Grid Background="#FFE5E5E5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="55"/>
+                    </Grid.RowDefinitions>
+                    <TextBox x:Name="userNameBox" IsEnabled="False" Grid.Row="0"  Margin="5,7,5,7" TextWrapping="NoWrap"/>
+                    <RichTextBox x:Name="userFeedback" Grid.Row="1" Margin="5"/>
+                    <Button x:Name="sendBtn" Content="Send" Grid.Row="2" VerticalAlignment="Top" Margin="4"/>
+                    <Button x:Name="cancelBtn" Content="Cancel" Grid.Row="2" VerticalAlignment="Bottom" Margin="4"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Updater" IsEnabled="False">
+                <Grid Background="#FFE5E5E5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="30"/>
+                    </Grid.RowDefinitions>
+                    <Label Content="Check for Updates" Grid.Row="0" FontSize="20"/>
+                    <TextBlock x:Name="messageTextBlock" TextWrapping="Wrap" Text="Fetching Data..." Grid.Row="1" Margin="3"/>
+                    <ProgressBar x:Name="updaterProgressBar" Grid.Row="2" Margin="3"/>
+                    <Button x:Name="downloadBtn" Content="Download &amp; Install" IsEnabled="False" Grid.Row="3" Margin="2"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+    </Grid>
+</Window>
