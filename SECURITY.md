@@ -1,21 +1,26 @@
+
 # Security Policy
+
+Thank you for helping keep FeedbackTooll and its users safe!
 
 ## Supported Versions
 
-Use this section to tell people about which versions of your project are
-currently being supported with security updates.
+We aim to keep the latest version of FeedbackTooll secure. Only the most recent release is actively supported with security updates.
 
 | Version | Supported          |
 | ------- | ------------------ |
-| 5.1.x   | :white_check_mark: |
-| 5.0.x   | :x:                |
-| 4.0.x   | :white_check_mark: |
-| < 4.0   | :x:                |
+| Latest  | :white_check_mark: |
+| Older   | :x:                |
 
 ## Reporting a Vulnerability
 
-Use this section to tell people how to report a vulnerability.
+If you discover a security vulnerability, please do not open a public issue. Instead, report it privately to the project maintainers.
 
-Tell them where to go, how often they can expect to get an update on a
-reported vulnerability, what to expect if the vulnerability is accepted or
-declined, etc.
+
+You can report security issues by opening a private discussion or by contacting the maintainer directly:
+
+- GitHub: [github.com/abraham-ny](https://github.com/abraham-ny)
+- Email: abraham.moruri1@gmail.com
+- Instagram: [abraham.dll](https://instagram.com/abraham.dll)
+
+We will investigate all reports promptly and keep you updated on the status. Responsible disclosure is appreciated, and we will credit you for your help if desired.

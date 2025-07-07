@@ -1,55 +1,176 @@
 
-# 🛠 feedbacktool.exe
 
-A **portable, GUI + CLI hybrid tool** to add **feedback collection** and **update checking** to any desktop application. Easily integrated into apps written in **C#, Java, Python, Go, or C++** with zero dependencies.
 
----
+# FeedbackTooll
 
-## ✨ Features
-
-- 🔍 **Check for updates** via GitHub or custom API
-- 📦 **Download and install updates** automatically (optional)
-- 📤 **Submit user feedback** via POST to your API
-- 🧪 **Developer mode** (`F12`) to inspect URL and debug
-- 🧠 **GUI or headless CLI mode**
-- ⚙️ **Lightweight, single `.exe`** — no install, no .NET runtime required (if published with .NET 8 as self-contained)
+A **portable, GUI + CLI hybrid tool** for easy feedback collection and update checking in any desktop application. Integrate with **C#, Java, Python, Go, or C++** apps with zero dependencies.
 
 ---
 
-## 📦 Integration Instructions
 
-You should bundle `feedbacktool.exe` in your application **release folder** or installer. Apps can launch it by passing command-line arguments depending on the mode.
+## Features
+
+- **Check for updates** via GitHub or custom API
+- **Download and install updates** automatically (optional)
+- **Submit user feedback** via POST to your API
+- **Developer mode** (`F12`) to inspect and debug
+- **GUI or headless CLI mode**
+- **Single `.exe`** — no install, no .NET runtime required (if published self-contained)
 
 ---
 
-## 🚀 Usage Examples
 
-### 🖥️ GUI Mode
+## Quick Start
+
+1. **Bundle** `feedbacktool.exe` in your app's release folder or installer.
+2. **Launch** it from your app using command-line arguments (see below).
+
+---
+
+
+## Usage
+
+### GUI Mode
 
 ```bash
 feedbacktool.exe -update https://api.github.com/repos/your/repo/releases/latest
 feedbacktool.exe -feedback https://yourapi.com/feedback
-````
+```
 
-This launches a small tabbed UI with update or feedback logic.
+This opens a simple UI for update or feedback.
+
+### CLI / No-GUI Mode
+
+```bash
+feedbacktool.exe -nogui -update <url> -downloadinstall true
+feedbacktool.exe -nogui -feedback -url <url> -message "It crashed" -username "testuser"
+```
 
 ---
 
-### 🧪 Developer Tools
 
-Press `F12` from the GUI to open a hidden DevTools window that shows the URL or diagnostic info.
+## Integration Examples
+
+### C#
+```csharp
+Process.Start("feedbacktool.exe", "-nogui -update https://api.github.com/repos/your/repo/releases/latest");
+```
+
+### Java
+```java
+ProcessBuilder builder = new ProcessBuilder("feedbacktool.exe", "-nogui", "-update", "https://api.github.com/repos/your/repo/releases/latest");
+builder.start();
+```
+
+### Python
+```python
+import subprocess
+subprocess.run([
+    'feedbacktool.exe', '-nogui', '-feedback', '-url', 'https://yourapi.com', '-message', 'Bug!', '-username', 'tester'
+])
+```
+
+### C++
+```cpp
+#include <cstdlib>
+int main() {
+    system("feedbacktool.exe -nogui -update https://api.github.com/repos/your/repo/releases/latest");
+    return 0;
+}
+```
+
+### Go
+```go
+import "os/exec"
+exec.Command("feedbacktool.exe", "-nogui", "-update", "https://api.github.com/repos/your/repo/releases/latest").Run()
+```
 
 ---
 
-### 🧑‍💻 CLI / No-GUI Mode (`-nogui`)
 
-### ✅ Update Check (with optional auto-download)
+## Recommended Usage
+
+Bundle `feedbacktool.exe` in your application's release directory:
+
+```
+YourApp/
+├── yourapp.exe
+├── feedbacktool.exe   ← bundle this
+└── ...
+```
+
+Call it from your app’s update button, crash handler, or settings screen.
+
+---
+
+
+## Exit Codes
+
+| Code | Meaning           |
+| ---- | ----------------- |
+| 0    | Success           |
+| 1    | Update failed     |
+| 2    | Feedback failed   |
+| 3    | Invalid arguments |
+
+---
+
+
+## Options
+
+* `-nogui` – disables GUI (for automation)
+* `-dev` – enables DevTools auto-launch
+* `-update <url>` – URL to check for updates
+* `-downloadinstall true|false` – download if update found
+* `-feedback` – activates feedback mode
+* `-url <url>` – API endpoint to POST to
+* `-message "<msg>"` – feedback message
+* `-username "<id>"` – optional identifier
+
+---
+
+
+## Requirements
+
+* Windows 10+
+* .NET 6+ (if not published self-contained)
+* Works offline except for network operations
+
+---
+
+
+## License
+
+MIT
+
+---
+
+
+## Author / Maintainer
+
+Created by [abraham-ny](https://github.com/abraham-ny) — contributions welcome!
+
+---
+
+
+## Future Plans
+
+* [ ] Auto-restart after update
+* [ ] Config file support
+* [ ] Log history window
+* [ ] Feedback categorization
+
+---
+
+### CLI / No-GUI Mode (`-nogui`)
+
+###  Update Check (with optional auto-download)
 
 ```bash
 feedbacktool.exe -nogui -update <url> -downloadinstall true
 ```
 
-### ✅ Send Feedback (silent)
+###  Send Feedback (silent)
 
 ```bash
 feedbacktool.exe -nogui -feedback -url <url> -message "It crashed" -username "testuser"
@@ -57,9 +178,9 @@ feedbacktool.exe -nogui -feedback -url <url> -message "It crashed" -username "te
 
 ---
 
-## 🧩 Cross-Language Integration
+##  Cross-Language Integration
 
-### 💬 C\#
+###  C\#
 
 ```csharp
 Process.Start("feedbacktool.exe", "-nogui -update https://api.github.com/repos/your/repo/releases/latest");
@@ -88,7 +209,7 @@ Console.WriteLine(result);
 
 ---
 
-### ☕ Java
+###  Java
 
 ```java
 ProcessBuilder builder = new ProcessBuilder("feedbacktool.exe",
@@ -106,7 +227,7 @@ try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.ge
 
 ---
 
-### 🐍 Python
+###  Python
 
 ```python
 import subprocess
@@ -122,7 +243,7 @@ print(result.stdout)
 
 ---
 
-### 🧵 C++
+###  C++
 
 ```cpp
 #include <cstdlib>
@@ -135,7 +256,7 @@ int main() {
 
 ---
 
-### 🐹 Go
+###  Go
 
 ```go
 package main
@@ -156,7 +277,7 @@ func main() {
 
 ---
 
-## 📁 Recommended Usage
+##  Recommended Usage
 
 Bundle `feedbacktool.exe` in your application's release directory or installer:
 
@@ -171,7 +292,7 @@ You may also call it from your app’s update button, crash handler, or settings
 
 ---
 
-## 🏁 Exit Codes
+##  Exit Codes
 
 | Code | Meaning           |
 | ---- | ----------------- |
@@ -184,7 +305,7 @@ You may also call it from your app’s update button, crash handler, or settings
 
 ---
 
-## 🔧 Options Summary
+##  Options Summary
 
 ### General
 
@@ -205,7 +326,7 @@ You may also call it from your app’s update button, crash handler, or settings
 
 ---
 
-## 🔐 Requirements
+##  Requirements
 
 * Works on **Windows 10+**
 * Requires **.NET 6+** (if not published self-contained)
@@ -213,19 +334,19 @@ You may also call it from your app’s update button, crash handler, or settings
 
 ---
 
-## 📜 License
+##  License
 
 MIT (or your choice)
 
 ---
 
-## 🙋‍♂️ Author / Maintainer
+##  Author / Maintainer
 
 Created by \[Your Name] — contributions welcome!
 
 ---
 
-## 💡 Future Plans
+##  Future Plans
 
 * [ ] Auto-restart after update
 * [ ] Config file support
