@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Xml;
 
 namespace FeedbackTooll
 {
@@ -19,9 +20,10 @@ namespace FeedbackTooll
     /// </summary>
     public partial class Devtool : Window
     {
-        public Devtool()
+        public Devtool(string url)
         {
             InitializeComponent();
+            urlTextBox.Text = url;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

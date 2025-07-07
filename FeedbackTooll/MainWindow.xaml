@@ -7,8 +7,8 @@
         mc:Ignorable="d"
         Title="Sunny" Height="353" Width="293" ResizeMode="NoResize">
     <Grid>
-        <TabControl>
-            <TabItem Header="Feedback" IsEnabled="False">
+        <TabControl x:Name="MainTabs">
+            <TabItem x:Name="FeedbackTab" Header="Feedback" IsEnabled="False">
                 <Grid Background="#FFE5E5E5">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="40"/>
@@ -21,7 +21,7 @@
                     <Button x:Name="cancelBtn" Content="Cancel" Grid.Row="2" VerticalAlignment="Bottom" Margin="4"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="Updater" IsEnabled="False">
+            <TabItem x:Name="UpdateTab" Header="Updater" IsEnabled="False">
                 <Grid Background="#FFE5E5E5">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="40"/>

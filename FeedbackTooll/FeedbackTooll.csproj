@@ -55,6 +55,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Updater.cs" />
     <Page Include="Devtool.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -70,6 +71,7 @@
     <Compile Include="Devtool.xaml.cs">
       <DependentUpon>Devtool.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Feedback.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
