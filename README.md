@@ -1,5 +1,4 @@
 
-````markdown
 # 🛠 feedbacktool.exe
 
 A **portable, GUI + CLI hybrid tool** to add **feedback collection** and **update checking** to any desktop application. Easily integrated into apps written in **C#, Java, Python, Go, or C++** with zero dependencies.
