@@ -129,23 +129,6 @@ Call it from your app’s update button, crash handler, or settings screen.
 
 ---
 
-
-## Requirements
-
-* Windows 10+
-* .NET 6+ (if not published self-contained)
-* Works offline except for network operations
-
----
-
-
-## License
-
-MIT
-
----
-
-
 ## Author / Maintainer
 
 Created by [abraham-ny](https://github.com/abraham-ny) — contributions welcome!
@@ -326,25 +309,6 @@ You may also call it from your app’s update button, crash handler, or settings
 
 ---
 
-##  Requirements
-
-* Works on **Windows 10+**
-* Requires **.NET 6+** (if not published self-contained)
-* Works offline except for network operations
-
----
-
-##  License
-
-MIT (or your choice)
-
----
-
-##  Author / Maintainer
-
-Created by \[Your Name] — contributions welcome!
-
----
 
 ##  Future Plans
 
@@ -353,9 +317,4 @@ Created by \[Your Name] — contributions welcome!
 * [ ] Log history window
 * [ ] Feedback categorization
 
-```
-
----
-
-Let me know if you want the README split into sections like `USAGE.md` and `INTEGRATION.md`, or if you'd like badges (`Build`, `Downloads`, etc.) for GitHub.
 ```
