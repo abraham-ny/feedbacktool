@@ -19,7 +19,10 @@ namespace FeedbackTooll
         {
             base.OnStartup(e);
             string[] args = Environment.GetCommandLineArgs();
-
+            if (args.Equals(null))
+            {
+                new MainWindow(null).Show();
+            }
             if (args.Contains("-nogui"))
             {
                 HandleNoGuiMode(args);
@@ -32,6 +35,7 @@ namespace FeedbackTooll
         }
         private void HandleNoGuiMode(string[] args)
         {
+            Console.WriteLine("FeedbackTool started with -nogui mode");
             try
             {
                 if (args.Contains("-update"))

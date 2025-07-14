@@ -26,6 +26,7 @@ namespace FeedbackTooll
             if (result.IsSuccessStatusCode)
             {
                 Console.WriteLine("Feedback sent successfully.");
+                //return 0;
             }
             else
             {

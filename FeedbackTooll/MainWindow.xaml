@@ -8,7 +8,7 @@
         Title="Sunny" Height="353" Width="293" ResizeMode="NoResize">
     <Grid>
         <TabControl x:Name="MainTabs">
-            <TabItem x:Name="FeedbackTab" Header="Feedback" IsEnabled="False">
+            <TabItem x:Name="FeedbackTab" Header="Feedback">
                 <Grid Background="#FFE5E5E5">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="40"/>
@@ -16,7 +16,7 @@
                         <RowDefinition Height="55"/>
                     </Grid.RowDefinitions>
                     <TextBox x:Name="userNameBox" IsEnabled="False" Grid.Row="0"  Margin="5,7,5,7" TextWrapping="NoWrap"/>
-                    <RichTextBox x:Name="userFeedback" Grid.Row="1" Margin="5"/>
+                    <TextBox x:Name="userFeedback" Grid.Row="1" Margin="5"/>
                     <Button x:Name="sendBtn" Content="Send" Grid.Row="2" VerticalAlignment="Top" Margin="4"/>
                     <Button x:Name="cancelBtn" Content="Cancel" Grid.Row="2" VerticalAlignment="Bottom" Margin="4"/>
                 </Grid>

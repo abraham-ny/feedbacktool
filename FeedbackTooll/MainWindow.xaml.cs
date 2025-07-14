@@ -23,12 +23,26 @@ namespace FeedbackTooll
     {
         private string mode;
         private string url;
+        string[] margs;
         public MainWindow(string[] args)
         {
             InitializeComponent();
-            ParseArgs(args);
-
+            if (args.Length<1)
+            {
+                ParseArgs(args);
+                margs = args;
+            }
+            else if(args.Equals(null)){
+                FeedbackTab.IsEnabled = true;
+                messageTextBlock.Text = "null: No url was provided, please close the app and try again with the right parameters";
+            }
             this.PreviewKeyDown += MainWindow_PreviewKeyDown;
+            sendBtn.Click += SendBtn_Click;
+        }
+
+        private void SendBtn_Click(object sender, RoutedEventArgs e)
+        {
+            handleFeedback(margs);
         }
 
         private void ParseArgs(string[] args)
@@ -37,35 +51,108 @@ namespace FeedbackTooll
             {
                 mode = args[1].ToLower();
                 url = GetArgValue(args, "-url");
+                margs = args;
 
                 if (mode == "-update")
                 {
                     bool download = GetArgValue(args, "-downloadinstall")?.ToLower() == "true";
                     UpdateTab.IsEnabled = true;
+                    FeedbackTab.IsEnabled = false;
                     MainTabs.SelectedItem = UpdateTab;
                     Updater upd = new Updater();
-                    upd.CheckUpdate(url, download).Wait();
+                    //upd.CheckUpdate(url, download).Wait();
+
+                    var release = new GitHubRelease
+                    {
+                        tag_name = "v1.0.0.0",
+                        name = "null",
+                        body = null,
+                        assets = null
+                    };
+                    try { 
+                        release = upd.GetLatestRelease(url);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, "Github Release error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+
+                    Console.WriteLine("Latest Version: " + release.tag_name);
+                    Console.WriteLine("Download URL: " + release.assets[0].browser_download_url);
+                    messageTextBlock.Text += "Latest Version: " + release.tag_name + "\n" 
+                        + "Download URL: " + release.assets[0].browser_download_url;
+
+                    // Compare versions
+                    string current = "1.0.0.0";
+                    try
+                    {
+                        current = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+                    }
+                    catch (Exception ex) {
+                        MessageBox.Show(ex.Message, "Version getter error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                    Version latest = new Version(release.tag_name.TrimStart('v'));
+
+                    if (latest > new Version(current))
+                    {
+                        Console.WriteLine("Update available!");
+                        messageTextBlock.Text += "\nIt's recommended to keep your software updated with the latest bug fixes, vulnerability patches and new features / improvements.";
+                        downloadBtn.IsEnabled = true;
+                    }
+                    else if (latest == new Version(current))
+                    {
+                        Console.WriteLine("Already up to date.");
+                        messageTextBlock.Text += "You're all good, come back later.";
+                    }
+                    else
+                    {
+                        Console.WriteLine("An error occurred");
+                        messageTextBlock.Text += "Something's wrong with the network.";
+                    }
                 }
-                else if (mode == "-feedback")
+                else if (mode == "-feedback" && GetArgValue(args, "-message")!=null|| !GetArgValue(args, "-message").Equals(""))
                 {
-                    FeedbackTab.IsEnabled = true;
-                    MainTabs.SelectedItem = FeedbackTab;
-                    //string url = GetArgValue(args, "-url");
-                    string message = GetArgValue(args, "-message");
-                    string user = GetArgValue(args, "-username") ?? "anonymous";
-                    Feedback fb = new Feedback();
-                    fb.SendFeedback(url, message, user).Wait();
+                    handleFeedback(args);
+                    
                 }
                 else
                 {
-                    MessageBox.Show("Invalid mode");
-                    Application.Current.Shutdown();
+                    //MessageBox.Show("Invalid mode");
+                    //Application.Current.Shutdown();
                 }
             }
             else
             {
                 MessageBox.Show("No arguments provided.");
-                Application.Current.Shutdown();
+                //Application.Current.Shutdown();
+            }
+        }
+
+        void handleFeedback(string[] args)
+        {
+            FeedbackTab.IsEnabled = true;
+            MainTabs.SelectedItem = FeedbackTab;
+            Feedback fb = new Feedback();
+
+            //string url = GetArgValue(args, "-url");
+            string message = GetArgValue(args, "-message") ?? "feedbacktool message (usually means no user message)";
+            string user = GetArgValue(args, "-username") ?? "anonymous";
+            userNameBox.Text = user;
+            if (message != null)
+            {
+                try
+                {
+                    fb.SendFeedback(url, message, user).Wait();
+                }
+                catch (Exception e)
+                {
+                    userFeedback.Text = e.Message;
+                }
+                userFeedback.Text = message;
+            }
+            else
+            {
+                userFeedback.Text = "Enter Message Here";
             }
         }
 
@@ -82,8 +169,9 @@ namespace FeedbackTooll
             if (e.Key == Key.F12)
             {
                 var dev = new Devtool(url);
-                dev.Owner = this;
-                dev.ShowDialog();
+                dev.Show();//added this line to test wether the below lines caused the issue
+                /*dev.Owner = this;
+                dev.ShowDialog();*/
             }
         }
     }
