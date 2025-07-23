@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,20 +25,28 @@ namespace FeedbackTooll
         private string mode;
         private string url;
         string[] margs;
+        string[] args;
         public MainWindow(string[] args)
         {
             InitializeComponent();
-            if (args.Length<1)
+            Loaded += MainWindow_Loaded;
+            this.args = args;
+            PreviewKeyDown += MainWindow_PreviewKeyDown;
+            sendBtn.Click += SendBtn_Click;
+        }
+
+        private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (args.Length > 1)
             {
                 ParseArgs(args);
                 margs = args;
             }
-            else if(args.Equals(null)){
+            else if (args == null || args.Length == 1)
+            {
                 FeedbackTab.IsEnabled = true;
                 messageTextBlock.Text = "null: No url was provided, please close the app and try again with the right parameters";
             }
-            this.PreviewKeyDown += MainWindow_PreviewKeyDown;
-            sendBtn.Click += SendBtn_Click;
         }
 
         private void SendBtn_Click(object sender, RoutedEventArgs e)
@@ -47,6 +56,11 @@ namespace FeedbackTooll
 
         private void ParseArgs(string[] args)
         {
+            if (!HasInternetConnection())
+            {
+                MessageBox.Show("No Internet", "Network error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
             if (args.Length > 1)
             {
                 mode = args[1].ToLower();
@@ -60,7 +74,7 @@ namespace FeedbackTooll
                     FeedbackTab.IsEnabled = false;
                     MainTabs.SelectedItem = UpdateTab;
                     Updater upd = new Updater();
-                    //upd.CheckUpdate(url, download).Wait();
+                    upd.CheckUpdate(url, download).Wait();
 
                     var release = new GitHubRelease
                     {
@@ -69,13 +83,6 @@ namespace FeedbackTooll
                         body = null,
                         assets = null
                     };
-                    try { 
-                        release = upd.GetLatestRelease(url);
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message, "Github Release error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
 
                     Console.WriteLine("Latest Version: " + release.tag_name);
                     Console.WriteLine("Download URL: " + release.assets[0].browser_download_url);
@@ -154,6 +161,17 @@ namespace FeedbackTooll
             {
                 userFeedback.Text = "Enter Message Here";
             }
+        }
+
+        public static bool HasInternetConnection()
+        {
+            try
+            {
+                var client = new WebClient();
+                using (client.OpenRead("https://www.google.com"))
+                    return true;
+            }
+            catch { return false; }
         }
 
         private string GetArgValue(string[] args, string key)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,9 +20,9 @@ namespace FeedbackTooll
         {
             base.OnStartup(e);
             string[] args = Environment.GetCommandLineArgs();
-            if (args.Equals(null))
+            if (!HasInternetConnection())
             {
-                new MainWindow(null).Show();
+                Console.WriteLine("No internet");
             }
             if (args.Contains("-nogui"))
             {
@@ -32,6 +33,17 @@ namespace FeedbackTooll
             {
                 new MainWindow(args).Show();
             }
+        }
+
+        public bool HasInternetConnection()
+        {
+            try
+            {
+                var client = new WebClient();
+                using (client.OpenRead("https://www.google.com"))
+                    return true;
+            }
+            catch { return false; }
         }
         private void HandleNoGuiMode(string[] args)
         {
